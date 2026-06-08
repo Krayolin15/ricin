@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Ricin Xpress</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-login-container">
+    <div class="admin-login-box">
+      <div class="logo" style="justify-content: center; margin-bottom: 24px;">
+        <img src="logo.png" alt="Ricin Xpress" style="height: 50px;">
+      </div>
+      <h2>Admin Dashboard</h2>
+      <form onsubmit="login(event)">
+        <div class="form-group">
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px;">Password</label>
+          <input type="password" id="password" placeholder="Enter admin password" required autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+          Login
+        </button>
+        <p class="error-message" id="errorMsg">Incorrect password. Please try again.</p>
+      </form>
+      <p style="text-align: center; margin-top: 20px; font-size: 0.9rem;">
+        <a href="/" style="color: var(--text-light);">
+          <i class="fas fa-arrow-left" style="margin-right: 4px;"></i> Back to Website
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const ADMIN_PASSWORD = 'ricinxpress2003';
+    
+    // Check if already logged in
+    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+      window.location.href = 'dashboard.html';
+    }
+    
+    function login(event) {
+      event.preventDefault();
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      
+      if (password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        window.location.href = 'dashboard.html';
+      } else {
+        errorMsg.classList.add('show');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    }
+    
+    // Clear error on input
+    document.getElementById('password').addEventListener('input', function() {
+      document.getElementById('errorMsg').classList.remove('show');
+    });
+  </script>
+</body>
+</html>

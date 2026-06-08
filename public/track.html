@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Order - Ricin Xpress</title>
+  <meta name="description" content="Track your Ricin Xpress delivery in real-time. Enter your order reference number to see live status updates.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="logo.png" alt="Ricin Xpress">
+      </a>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="track.html" class="nav-link active">Track Order</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="nav-cta">
+          <a href="book.html" class="btn btn-primary btn-sm">Book Now</a>
+        </div>
+      </nav>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Track Your Order</h1>
+      <p>Enter your order reference number to see live status.</p>
+    </div>
+  </section>
+
+  <!-- Track Box -->
+  <section class="track-box">
+    <div class="container">
+      <div class="track-form animate-on-scroll">
+        <input type="text" id="trackInput" placeholder="e.g. RXD45872" maxlength="10">
+        <button class="btn btn-primary" onclick="trackOrder()">
+          <i class="fas fa-search"></i> Track
+        </button>
+      </div>
+      
+      <div id="trackResult" class="track-result">
+        <div class="track-status">
+          <div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 4px;">Order <span id="resultRef" class="order-ref"></span></h3>
+            <p style="font-size: 0.9rem; color: var(--text-light);" id="resultDate"></p>
+          </div>
+          <span id="resultStatus" class="status-badge"></span>
+        </div>
+        
+        <div class="status-timeline" id="statusTimeline">
+          <div class="timeline-step" data-status="pending">
+            <div class="timeline-dot"><i class="fas fa-clipboard"></i></div>
+            <div class="timeline-label">Pending</div>
+          </div>
+          <div class="timeline-step" data-status="confirmed">
+            <div class="timeline-dot"><i class="fas fa-check"></i></div>
+            <div class="timeline-label">Confirmed</div>
+          </div>
+          <div class="timeline-step" data-status="onway">
+            <div class="timeline-dot"><i class="fas fa-truck"></i></div>
+            <div class="timeline-label">On My Way</div>
+          </div>
+          <div class="timeline-step" data-status="pickedup">
+            <div class="timeline-dot"><i class="fas fa-box"></i></div>
+            <div class="timeline-label">Picked Up</div>
+          </div>
+          <div class="timeline-step" data-status="completed">
+            <div class="timeline-dot"><i class="fas fa-flag-checkered"></i></div>
+            <div class="timeline-label">Completed</div>
+          </div>
+        </div>
+        
+        <div id="trackDetails" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-light);">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Sender</p>
+              <p style="font-weight: 600;" id="detailSender"></p>
+            </div>
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Phone</p>
+              <p style="font-weight: 600;" id="detailPhone"></p>
+            </div>
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Pickup Address</p>
+              <p style="font-weight: 500; font-size: 0.9rem;" id="detailPickup"></p>
+            </div>
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Drop-off Address</p>
+              <p style="font-weight: 500; font-size: 0.9rem;" id="detailDropoff"></p>
+            </div>
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Collection Date</p>
+              <p style="font-weight: 600;" id="detailDate"></p>
+            </div>
+            <div>
+              <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Collection Time</p>
+              <p style="font-weight: 600;" id="detailTime"></p>
+            </div>
+          </div>
+          <div style="margin-top: 16px;">
+            <p style="font-size: 0.85rem; color: var(--text-lighter); margin-bottom: 4px;">Item Description</p>
+            <p style="font-weight: 500;" id="detailItem"></p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="notFound" style="display: none; text-align: center; padding: 40px; color: var(--text-lighter);">
+        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;"></i>
+        <p style="font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 8px;">Order Not Found</p>
+        <p>We couldn't find an order with that reference number. Please check and try again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <img src="logo.png" alt="Ricin Xpress" style="filter: brightness(0) invert(1);">
+          </a>
+          <p>Safe, same-day deliveries in and around Durban. Your trusted local courier service.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="book.html">Book a Delivery</a></li>
+            <li><a href="track.html">Track Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><span class="icon"><i class="fas fa-phone"></i></span> 067 786 7203</p>
+          <p><span class="icon"><i class="fab fa-whatsapp"></i></span> 068 293 7167</p>
+          <p><span class="icon"><i class="fas fa-envelope"></i></span> info@ricinxpress.co.za</p>
+          <p><span class="icon"><i class="fas fa-map-marker-alt"></i></span> Durban, South Africa</p>
+        </div>
+        <div>
+          <h4>Admin</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Admin Login &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Ricin Xpress. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script src="track.js"></script>
+</body>
+</html>

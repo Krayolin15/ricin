@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Order - Ricin Xpress</title>
+  <meta name="description" content="Book your same-day delivery with Ricin Xpress. Fill in our simple order form and we'll handle the rest.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="logo.png" alt="Ricin Xpress">
+      </a>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="track.html" class="nav-link">Track Order</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="nav-cta">
+          <a href="book.html" class="btn btn-primary btn-sm">Book Now</a>
+        </div>
+      </nav>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Submit Order</h1>
+      <p>Please fill in the details below to place your order.</p>
+    </div>
+  </section>
+
+  <!-- Order Form -->
+  <section class="order-form-container">
+    <div class="container">
+      <form id="orderForm" class="form-card animate-on-scroll" onsubmit="submitOrder(event)">
+        
+        <!-- Sender Details -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            Sender Details
+            <span class="dot"></span>
+          </h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" id="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" id="lastName" placeholder="Dlamini" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" placeholder="071 234 5678" required maxlength="15">
+          </div>
+        </div>
+
+        <!-- Addresses -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            Addresses
+            <span class="dot"></span>
+          </h3>
+          <div class="form-group">
+            <label>Pickup Address <span class="required">*</span></label>
+            <input type="text" id="pickupAddress" placeholder="123 Pickup St, Durban" required>
+          </div>
+          <div class="form-group">
+            <label>Drop-off Address <span class="required">*</span></label>
+            <input type="text" id="dropoffAddress" placeholder="456 Drop-off Ave, Durban" required>
+          </div>
+        </div>
+
+        <!-- Collection Date & Time -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            Collection Date & Time
+            <span class="dot"></span>
+          </h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Collection Date <span class="required">*</span></label>
+              <input type="date" id="collectionDate" required>
+            </div>
+            <div class="form-group">
+              <label>Collection Time <span class="required">*</span></label>
+              <select id="collectionTime" required>
+                <option value="">Select time</option>
+                <option value="08:00 - 09:00">08:00 - 09:00</option>
+                <option value="09:00 - 10:00">09:00 - 10:00</option>
+                <option value="10:00 - 11:00">10:00 - 11:00</option>
+                <option value="11:00 - 12:00">11:00 - 12:00</option>
+                <option value="12:00 - 13:00">12:00 - 13:00</option>
+                <option value="13:00 - 14:00">13:00 - 14:00</option>
+                <option value="14:00 - 15:00">14:00 - 15:00</option>
+                <option value="15:00 - 16:00">15:00 - 16:00</option>
+                <option value="16:00 - 17:00">16:00 - 17:00</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item Details -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            Item Details
+            <span class="dot"></span>
+          </h3>
+          <div class="form-group">
+            <label>Item Description <span class="required">*</span></label>
+            <input type="text" id="itemDescription" placeholder="e.g. Documents, small parcel" required>
+          </div>
+          <div class="form-group">
+            <label>Special Instructions (Optional)</label>
+            <textarea id="specialInstructions" placeholder="Any special instructions?"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="submitBtn">
+          SUBMIT ORDER
+        </button>
+        
+        <p class="form-note">
+          <i class="fas fa-lock" style="font-size: 0.8rem; margin-right: 4px;"></i>
+          Your information is 100% safe and secure.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <img src="logo.png" alt="Ricin Xpress" style="filter: brightness(0) invert(1);">
+          </a>
+          <p>Safe, same-day deliveries in and around Durban. Your trusted local courier service.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="book.html">Book a Delivery</a></li>
+            <li><a href="track.html">Track Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><span class="icon"><i class="fas fa-phone"></i></span> 067 786 7203</p>
+          <p><span class="icon"><i class="fab fa-whatsapp"></i></span> 068 293 7167</p>
+          <p><span class="icon"><i class="fas fa-envelope"></i></span> info@ricinxpress.co.za</p>
+          <p><span class="icon"><i class="fas fa-map-marker-alt"></i></span> Durban, South Africa</p>
+        </div>
+        <div>
+          <h4>Admin</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Admin Login &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Ricin Xpress. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script src="book.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Ricin Xpress</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body style="background: var(--bg-light);">
+  <!-- Admin Header -->
+  <div class="admin-header">
+    <div class="admin-header-inner">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="/" class="logo">
+          <img src="logo.png" alt="Ricin Xpress" style="height: 32px; filter: brightness(0) invert(1);">
+        </a>
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div class="admin-header-actions">
+        <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+          <i class="fas fa-user" style="margin-right: 6px;"></i> Administrator
+        </span>
+        <button onclick="logout()" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white; padding: 8px 16px; font-size: 0.85rem;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Body -->
+  <div class="admin-body">
+    <div class="container">
+      
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card primary">
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <div class="stat-card warning">
+          <div class="stat-label">Pending</div>
+          <div class="stat-value" id="statPending">0</div>
+        </div>
+        <div class="stat-card info">
+          <div class="stat-label">In Progress</div>
+          <div class="stat-value" id="statInProgress">0</div>
+        </div>
+        <div class="stat-card success">
+          <div class="stat-label">Completed</div>
+          <div class="stat-value" id="statCompleted">0</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="dashboard-controls">
+        <div class="search-box">
+          <span class="search-icon"><i class="fas fa-search"></i></span>
+          <input type="text" id="searchInput" placeholder="Search by reference, name, or address..." oninput="filterOrders()">
+        </div>
+        <div class="filter-box">
+          <select id="statusFilter" onchange="filterOrders()">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="onway">On My Way</option>
+            <option value="pickedup">Picked Up</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div class="filter-box">
+          <select id="sortFilter" onchange="filterOrders()">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="orders-table-container">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Customer</th>
+              <th>Pickup</th>
+              <th>Drop-off</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+        <div class="no-orders" id="noOrders" style="display: none;">
+          <div class="no-orders-icon"><i class="fas fa-inbox"></i></div>
+          <p style="font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 8px;">No orders found</p>
+          <p>Orders will appear here once customers start placing them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Detail Modal -->
+  <div class="modal-overlay" id="orderModal" onclick="closeModal(event)">
+    <div class="modal" style="position: relative;" onclick="event.stopPropagation()">
+      <h3>Order Details</h3>
+      <div id="modalContent"></div>
+      <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
+        <button onclick="closeModalDirect()" class="btn btn-outline btn-sm">Close</button>
+        <button onclick="downloadCurrentPDF()" class="btn btn-primary btn-sm">
+          <i class="fas fa-download"></i> Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Successful - Ricin Xpress</title>
+  <meta name="description" content="Your Ricin Xpress order has been submitted successfully. Track your delivery in real-time.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="logo.png" alt="Ricin Xpress">
+      </a>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="track.html" class="nav-link">Track Order</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="nav-cta">
+          <a href="book.html" class="btn btn-primary btn-sm">Book Now</a>
+        </div>
+      </nav>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Success Content -->
+  <section class="success-container">
+    <div class="success-icon">
+      <i class="fas fa-check"></i>
+    </div>
+    <h1>Order Submitted!</h1>
+    <p>Your delivery order has been received. A WhatsApp message has been sent to our team, and your receipt has been downloaded.</p>
+    
+    <div class="ref-box">
+      <h3>Your Order Reference</h3>
+      <div class="ref-number" id="refNumber">---</div>
+    </div>
+    
+    <div class="success-actions">
+      <a href="track.html" class="btn btn-primary">
+        <i class="fas fa-search"></i> Track Order
+      </a>
+      <a href="book.html" class="btn btn-outline">
+        <i class="fas fa-plus"></i> New Order
+      </a>
+      <a href="/" class="btn btn-outline">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Display the order reference from session
+    document.addEventListener('DOMContentLoaded', () => {
+      const ref = sessionStorage.getItem('lastOrderRef');
+      if (ref) {
+        document.getElementById('refNumber').textContent = ref;
+      }
+    });
+  </script>
+</body>
+</html>
